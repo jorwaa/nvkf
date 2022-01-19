@@ -31,8 +31,6 @@ class FormRoot extends React.Component {
     }
 }
 
-const form = <FormRoot testProp="vin" />;
-
 class ImporterInfo extends React.Component {
     render() {
         return (
@@ -254,7 +252,6 @@ class Product extends React.Component {
      * 
      */
     getData(isVisiblie) {
-        var prodNum = this.state.productNumber;
         if (!isVisiblie)
         this.addData();
 
@@ -290,89 +287,6 @@ class Product extends React.Component {
 
 }
 
-/*
-class ProductInfo extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            produktNummer: props.prodNum,
-            data: {},
-            produsent: "",
-            hjemmeside: "",
-            omrade: "",
-            druer: "",
-            navn: "",
-            argang: "",
-            pris: "",
-            produktside: ""
-        }
-        this.findProdNum = this.findProdNum.bind(this);
-        
-    }
-
-    componentDidMount() {
-        alert(this.state.produktNummer);
-        this.findProdNum(this.state.produktNummer);
-    }
-
-    render() {
-        return (
-            <div className="vin" id="divVinInfo">
-                <label htmlFor="produsentVin"> Produsent: <span className="req">  </span> </label>
-                <br></br>
-                <input name="produsentVin" type="text" id="produsentVin" value={this.state.produsent}
-                onChange={e => this.setState({produsent: e.target.value})}>
-                </input>
-                <br></br>
-                <label htmlFor="hjemmesideVin"> Produsents hjemmeside: </label> 
-                <br></br>
-                <input name="hjemmesideVin" type="text" id="hjemmesideVin" value={this.state.hjemmeside}
-                onChange={e => this.setState({hjemmeside: e.target.value})}>
-                </input>
-                <br></br>
-                <label htmlFor="omradeVin"> Område og land: <span className="req">  </span> </label> 
-                <br></br>
-                <input name="omradeVin" type="text" id="omradeVin" value={this.state.omrade}
-                onChange={e => this.setState({omrade: e.target.value})}>
-                </input>
-                <br></br>
-                <label htmlFor="drueVin"> Drue- og drueblanding:
-                    <span className="req">  </span> 
-                </label> 
-                <br></br>
-                <input name="drueVin" type="text" id="drueVin" value={this.state.druer}
-                onChange={e => this.setState({druer: e.target.value})}>
-                </input>
-                <br></br>
-                <label htmlFor="navnVin"> Vinens navn: <span className="req">  </span> </label> 
-                <br></br>
-                <input name="navnVin" type="text" id="navnVin" value={this.state.navn}
-                onChange={e => this.setState({navn: e.target.value})}>
-                </input>
-                <br></br>
-                <label htmlFor="argangVin"> Årgang: <span className="req">  </span> </label> 
-                <br></br>
-                <input name="argang" type="text" id="argangVin" value={this.state.argang}
-                onChange={e => this.setState({argang: e.target.value})}>
-                </input>
-                <br></br>
-                <label htmlFor="prisVin"> Pris Vinmonopolet: </label> 
-                <br></br>
-                <input name="prisVin" type="text" id="prisVin" value={this.state.pris}
-                onChange={e => this.setState({pris: e.target.value})}>
-                </input>
-                <br></br>
-                <label htmlFor="linkVin"> Link til Vinmonopolets side for vinen: </label> 
-                <br></br>
-                <input name="linkVin" type="text" id="linkVin" value={this.state.produktside}
-                onChange={e => this.setState({produktside: e.target.value})}>
-                </input>
-                <br></br>
-            </div>
-        );
-    }
-}
-*/
 ReactDOM.render(
 <FormRoot />,
 document.getElementById('root')
