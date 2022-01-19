@@ -2,5 +2,7 @@
     "appService.zipIgnorePattern": [
         "node_modules{,/**}",
         ".vscode{,/**}"
-    ]
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/b5f439e8-9048-423e-b4ab-24c8b8d8ddfc/resourceGroups/NVKF-ressurser/providers/Microsoft.Web/sites/nvkf",
+    "appService.deploySubpath": "."
 }
