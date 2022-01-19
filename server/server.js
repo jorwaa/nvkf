@@ -4,7 +4,7 @@ const express = require("express");
 const req = require("express/lib/request");
 const app = express();
 
-const PORT = process.env.PORT || 3001;
+const PORT = 8080;
 
 let tokensRaw = fs.readFileSync("res/auths.json");
 const tokens = JSON.parse(tokensRaw);
