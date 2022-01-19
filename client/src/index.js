@@ -378,13 +378,5 @@ ReactDOM.render(
 document.getElementById('root')
 );
 
-function fetchInfo(id = -1) {
-    //const [data, setData] = React.useState(null);
-    React.useEffect(() => {
-        fetch("/api")
-        .then((res) => res.json())
-        .then (data => alert("Data fra server: " + data))
-    })
-}
 
 
