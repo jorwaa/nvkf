@@ -25,7 +25,7 @@ app.get("/api/vp", (req, response) => {
         accept: "application/json",
         headers: {
             "Cache-Control": "no-cache",
-            "Ocp-Apim-Subscription-Key": tokens.Vinmonopolet
+            "Ocp-Apim-Subscription-Key": process.env.VP_AUTH
         }
     }
     // And away it goes!
