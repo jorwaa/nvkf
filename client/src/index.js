@@ -7,49 +7,92 @@ class FormRoot extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            imp_name: "",
             numProducts: 1,
-            importer: <ImporterInfo  />,
-            products: <ProductList />
+            data: {}
         };
+        this.inputChanged = this.inputChanged.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    componentDidMount() {
+        this.setState({
+            importer: <ImporterInfo  name={this.inputChanged}/>,
+            products: <ProductList name={this.inputChanged}/>,
+        })
+    }
+
     render() {
         return (
         <div className='form'>
-            <div className='info'>
-                <h1>Registreringsskjema for vinsmaking</h1>
-                <hr></hr>
-                <p><b>Merk: </b> Denne nettsiden støttes ikke av Internet Explorer.</p>
-                <p>Ved bruk av denne nettleseren, fyll heller inn skjemaet du
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSccVTMiwCyowU5nPCGWjisLBgpgnaf43VoEg7ULE4FUMOXGJQ/viewform?vc=0&c=0&w=1"> finner her. </a>
-                </p>
-                <p> Skriv inn info om {this.props.testProp}!</p>
+            <form id='scheme' onSubmit={this.handleSubmit}>
+                <div className='info'>
+                    <h1>Registreringsskjema for vinsmaking</h1>
+                    <hr></hr>
+                    <p><b>Merk: </b> Denne nettsiden støttes ikke av Internet Explorer.</p>
+                    <p>Ved bruk av denne nettleseren, fyll heller inn skjemaet du
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSccVTMiwCyowU5nPCGWjisLBgpgnaf43VoEg7ULE4FUMOXGJQ/viewform?vc=0&c=0&w=1"> finner her. </a>
+                    </p>
+                    <p> Skriv inn info om {this.props.testProp}!</p>
+                    <p>{this.state.imp_name}</p>
                 </div>
-            {this.state.importer}
-            {this.state.products}
+                {this.state.importer}
+                {this.state.products}
+            </form>
         </div>
         );
     }
+
+    /**
+     * Generic function that updates stat values.
+     * @param key: the state key
+     * @param val: the new value
+     * 
+     */
+    inputChanged(key, val) {
+        console.log(key + ": " + val);
+        this.setState({
+            [key]: val
+        });
+    }
+
+    /**
+     * Triggered when form is submitted.
+     * formats the relevant data and sends it 
+     * in a POST request to the API "/api/google".
+     * 
+     * What happens then? idk...
+     */
+    handleSubmit(evt) {
+        alert("SUBMITTING FORM");
+        
+        evt.preventDefault();
+    }
+
 }
 
 class ImporterInfo extends React.Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
         return (
             <div id="importerInfo">
                 <label htmlFor="navn">Importør: *</label>
                 <br></br>
-                <input id="navn" name="navn" type="text" required></input>
+                <input id="navn" name="navn" type="text" onChange={evt => this.props.name("imp_name", evt.target.value)} required></input>
                 <br></br>
                 <label htmlFor="kontakt">Kontaktperson hos importør, navn: <span className="req"> * </span> </label>
                 <br></br>
-                <input name="kontakt" type="text" required id="kontakt"></input>
+                <input name="kontakt" type="text" onChange={evt => this.props.name("imp_kontakt", evt.target.value)} required id="kontakt"></input>
                 <br></br>
                 <label htmlFor="epost">E-post til kontaktperson: <span className="req"> * </span> </label>
                 <br></br>
-                <input name="epost" type="email" required id="epost"></input>
+                <input name="epost" type="email" onChange={evt => this.props.name("imp_mail", evt.target.value)} required id="epost"></input>
                 <br></br>
                 <label htmlFor="tlf">Telefonnummer til kontaktperson: <span className="req"> * </span> </label>
                 <br></br>
-                <input name="tlf" type="text" required id="tlf"></input>
+                <input name="tlf" type="text" onChange={evt => this.props.name("imp_tlf", evt.target.value)} required id="tlf"></input>
             </div>
         );
     }
@@ -67,13 +110,18 @@ class ProductList extends React.Component {
         this.addProduct = this.addProduct.bind(this);
     }
     render() {
+        var i = 0;
         return (
             <div className='products'>
                 <div className='productsList'>
                 <h3>Produkter</h3>
                 <hr></hr>
-                {this.state.products.map((e) => {
-                    return <div key={e.props.num}> {e} </div>;
+                {
+                    this.state.products.map((e) => {
+                    return <div key={e.props.num}>
+                    <h3><b>{(++i)}. vin:</b></h3>
+                    {e} 
+                    </div>;
                 })}
                 </div>
                 <div className='newProductBtn'>
@@ -81,10 +129,19 @@ class ProductList extends React.Component {
                         Legg til et produkt
                     </button>
                 </div>
+                <div className='submitBtn'>
+                    <button type="submit" name="send">
+                        Send inn
+                    </button>
+                </div>
             </div>
         );
     }
 
+    /**
+     * soon(tm)
+     * 
+     */
     renderProducts() {
         // IF total > cur:
         //const cur = this.state.productsRendered;
@@ -106,7 +163,7 @@ class ProductList extends React.Component {
         return this.state.numProducts;
     }
     /**
-     * 
+     * soon(tm)
      * @param {int} n: value to add to numProducts.
      *             Can be both positive & negative. 
      * @returns the new value of numProducts.
@@ -119,6 +176,11 @@ class ProductList extends React.Component {
         return this.state.numProducts;
     }
 
+    /**
+     * Adds a new Product object.
+     * It is added to the tail of the relevant array
+     * & is given the property 'num' with the length of said array.
+     */
     addProduct() {
         console.log("Legger til nytt produkt...");
         this.setState({
@@ -127,8 +189,12 @@ class ProductList extends React.Component {
 
         });
     }
-}
 
+}
+/**
+ * Represents the data related to a single product.
+ * Can interact with the /api/vp API
+ */
 class Product extends React.Component {
     constructor(props) {
         super(props);
@@ -169,7 +235,6 @@ class Product extends React.Component {
     render() {
         return (
             <div id={'div'+this.props.num}>
-                <h3><b>{(this.props.num+1)}. vin:</b></h3>
                 <p><i> bare varenummer-feltet er obligatorisk </i></p>
                 <label htmlFor="varenummerVin"> Varenummer Vinmonopolet: 
                     <span className="req"> * </span> 
@@ -239,7 +304,7 @@ class Product extends React.Component {
     }
 
     /**
-     * 
+     * DEPRECATED(?) - DELETE LATER
      * @param {*} e:  
      */
     updateProductNumber(e) {
@@ -249,20 +314,21 @@ class Product extends React.Component {
         console.log(this.state.productNumber);
     }
     /**
-     * 
+     * called when the "search"-button is pressed.
+     * If necessary, re-renders the object with {display:block}.
+     * @param isVisible: is True if neither the "search" or "manual"
+     *      buttons has been pressed yet
      */
     getData(isVisiblie) {
         if (!isVisiblie)
         this.addData();
 
         this.searchForProductInfo();
-
-        //(this.myRef.current).findProdNum(prodNum);
     }
     /**
-     * 
-     * @param doSearch: is true if API query is done 
-     *        on creation of element
+     * addData re-renders the object with {display:inline} 
+     * & removes the manualBtn button.
+     * addData is called the first time a button of this object is pressed 
      */
     addData() {
         this.setState({
@@ -277,12 +343,42 @@ class Product extends React.Component {
         })
     }
 
+    /**
+     * Initiates an asynchronous api request to "/api/vp".
+     * "/api/vp" is used to fetch product information from Vinmonopolet.
+     * 
+     * Once finished, either alert user of an error or use the
+     * data fetched to populate the relevant input fields.
+     */
     searchForProductInfo() {
         const product = this.state.productNumber;
         console.log("Søker opp produkt " + this.state.productNumber);
-        fetch("/api?product="+product)
-        .then((res) => res.json())
-        .then(data => console.log(data));
+        fetch("/api/vp?product="+product)
+        .then((res) =>  res.json())
+        .then(data => { 
+            console.log(data);
+            if (data.error != "false" || data.data == "")
+            alert(`Fant ikke produktinformasjon.\n${data.error}`);
+            else {
+                const vin = data.data;
+                var druer = "";
+                for (let i = 0; i < (vin.ingredients.grapes).length; i++)
+                {
+                    druer += `${vin.ingredients.grapes[i].grapeDesc} ${vin.ingredients.grapes[i].grapePct}%, `
+                }
+                druer = druer.slice(0, druer.length-2); //End trailing chars
+                this.setState({
+                    productId: vin.basic.productId,
+                    produsent: vin.logistics.manufacturerName,
+                    omrade: `${vin.origins.origin.country}, ${vin.origins.origin.region}`,
+                    druer: druer,
+                    navn: vin.basic.productLongName,
+                    argang: vin.basic.vintage,
+                    pris: vin.prices[0].salesPrice,
+                    produktside: `www.vinmonopolet.no/p/${vin.basic.productId}`
+                });
+            }
+        });
     }
 
 }

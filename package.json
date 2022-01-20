@@ -6,9 +6,10 @@
   "scripts": {
     "test": "echo \"Warning: no test specified\"",
     "start": "node server/server.js",
-    "client": "npm start --prefix client",
-    "build": "npm run build --prefix client",
-    "install_cl" : "npm install --prefix client"
+    "build": "npm run build --prefix client"
+  },
+  "engines": {
+    "node": "16.13.1"
   },
   "keywords": [],
   "author": "",

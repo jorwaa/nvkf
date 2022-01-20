@@ -1,24 +1,28 @@
 const fs = require("fs");
 const https = require("https");
+const path = require("path");
 const express = require("express");
 const req = require("express/lib/request");
 const app = express();
 
-const PORT = 8080;
+const PORT = process.env.PORT || 3001;;
 
 let tokensRaw = fs.readFileSync("res/auths.json");
 const tokens = JSON.parse(tokensRaw);
 
-// Vinmonopolet API:
+// Display front-end:
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-app.get("/api", (req, response) => {
+// API calls:
+app.get("/api/vp", (req, response) => {
     console.log("Starter API-sak");
     const id = req.query.product;
     //Now create the request
     const options = {
         hostname: "apis.vinmonopolet.no",
-        path: `/`,
+        path: `/press-products/v0/details-normal?productId=${id}`,
         method: "GET",
+        accept: "application/json",
         headers: {
             "Cache-Control": "no-cache",
             "Ocp-Apim-Subscription-Key": tokens.Vinmonopolet
@@ -28,16 +32,18 @@ app.get("/api", (req, response) => {
     console.log("Sender request til remote server");
     console.log("host: " + options.hostname);
     console.log("path: " + options.path);
+    console.log("GET request: ", (options.hostname).concat(options.path));
+    console.log("headers: ", options.headers);
     //res.json({a:"a"});
-    https.request(options, res => {
+    https.get(options, (res) => {
         console.log(`statusCode: ${res.statusCode}`)
         console.log("Request sendt!");
         res.on("data", d => {
-            console.log("Data mottatt: " + JSON.parse(d));
             response.json({
                 productNumber: id,
-                data: d[0],
-                error: ""
+                //data: (d.toString()).replaceAll('"',"'"),
+                data: JSON.parse(d.toString())[0],
+                error: "false"
             });
         })
         
@@ -50,16 +56,16 @@ app.get("/api", (req, response) => {
             })
         })
     });
-    console.log("Ute av requesten?");
-/*
-res.json({
-    ID: id,
-    token: tokens.Vinmonopolet,
-    data: "Coming soon to a cinema near you!"
 });
-*/
+
+app.post("/api/google", (req, res) => {
+    console.log("POST request => '/api/google");
+})
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
 
 app.listen(PORT, () => {
-    console.log('listening to port ${PORT}');
+    console.log(`listening to port ${PORT}`);
 });
