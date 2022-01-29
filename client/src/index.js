@@ -98,6 +98,11 @@ class ImporterInfo extends React.Component {
     }
 }
 
+/**
+ * Part of the form containing product data.
+ * Unsure if this should be a class of its own,
+ * will probably rewrite? :->
+ */
 class ProductList extends React.Component {
     constructor(props) {
         super(props);
@@ -120,7 +125,10 @@ class ProductList extends React.Component {
                     this.state.products.map((e) => {
                     return <div key={e.props.num}>
                     <h3><b>{(++i)}. vin:</b></h3>
-                    {e} 
+                    {console.log("AAAAA")}
+                    {this.renderSingleWine(i)}
+                    {console.log(this.state.varenummerVin1)}
+                     
                     </div>;
                 })}
                 </div>
@@ -138,23 +146,82 @@ class ProductList extends React.Component {
         );
     }
 
-    /**
-     * soon(tm)
-     * 
-     */
-    renderProducts() {
-        // IF total > cur:
-        //const cur = this.state.productsRendered;
-        const cur = this.state.products.length;
-        const total = this.state.numProducts;
-        console.log("cur: " + cur + ", tot: " + total)
-        for (var n = cur; n < total; n++) {
-            console.log("render " + (n)); 
-            this.setState({
-                products: [...this.state.products, <Product num={n}/>],
-            });
-        }
-    }
+
+    
+renderSingleWine(num) {
+    return (
+        <div id={'div'+num}>
+            <p><i> bare varenummer-feltet er obligatorisk </i></p>
+            <label htmlFor="varenummerVin"> Varenummer Vinmonopolet: 
+                <span className="req"> * </span> 
+            </label>
+            <br></br>
+            <input name="varenummerVin" type="text" required id={"varenummerVin"+num} value={this.state.productNumber} 
+            onChange={(e) => { this.setState({[e.target.id]: e.target.value}); console.log(e.target.id)}} ></input>
+            <br></br>
+            <div id="popupBtn">
+                {this.state.searchButton}
+                {this.state.manualButton}
+            </div>
+            <div className="vin" id="divVinInfo" style={{display: this.state.display}}>
+            <label htmlFor="produsentVin"> Produsent: <span className="req">  </span> </label>
+            <br></br>
+            <input name="produsentVin" type="text" id={"produsentVin"+num} value={this.state.produsent}
+            onChange={e => this.setState({[e.target.id]: e.target.value})}>
+            </input>
+            <br></br>
+            <label htmlFor="hjemmesideVin"> Produsents hjemmeside: </label> 
+            <br></br>
+            <input name="hjemmesideVin" type="text" id={"'hjemmesideVin"+num} value={this.state.hjemmeside}
+            onChange={e => this.setState({[e.target.id]: e.target.value})}>
+            </input>
+            <br></br>
+            <label htmlFor="omradeVin"> Område og land: <span className="req">  </span> </label> 
+            <br></br>
+            <input name="omradeVin" type="text" id={"'omradeVin"+num} value={this.state.omrade}
+            onChange={e => this.setState({[e.target.id]: e.target.value})}>
+            </input>
+            <br></br>
+            <label htmlFor="drueVin"> Drue- og drueblanding:
+                <span className="req">  </span> 
+            </label> 
+            <br></br>
+            <input name="drueVin" type="text" id={"'drueVin"+num} value={this.state.druer}
+            onChange={e => this.setState({[e.target.id]: e.target.value})}>
+            </input>
+            <br></br>
+            <label htmlFor="navnVin"> Vinens navn: <span className="req">  </span> </label> 
+            <br></br>
+            <input name="navnVin" type="text" id={"'navnVin"+num} value={this.state.navn}
+            onChange={e => this.setState({[e.target.id]: e.target.value})}>
+            </input>
+            <br></br>
+            <label htmlFor="argangVin"> Årgang: <span className="req">  </span> </label> 
+            <br></br>
+            <input name="argang" type="text" id={"'argangVin"+num} value={this.state.argang}
+            onChange={e => this.setState({[e.target.id]: e.target.value})}>
+            </input>
+            <br></br>
+            <label htmlFor="prisVin"> Pris Vinmonopolet: </label> 
+            <br></br>
+            <input name="prisVin" type="text" id={"'prisVin"+num} value={this.state.pris}
+            onChange={e => this.setState({[e.target.id]: e.target.value})}>
+            </input>
+            <br></br>
+            <label htmlFor="linkVin"> Link til Vinmonopolets side for vinen: </label> 
+            <br></br>
+            <input name="linkVin" type="text" id={"'linkVin"+num} value={this.state.produktside}
+            onChange={e => this.setState({produktside: e.target.value})}>
+            </input>
+            <br></br>
+        </div>                <hr></hr>
+        </div>
+    );   
+}
+
+
+
+
 /**
  * 
  * @returns the current value of numProducts
@@ -387,6 +454,3 @@ ReactDOM.render(
 <FormRoot />,
 document.getElementById('root')
 );
-
-
-
