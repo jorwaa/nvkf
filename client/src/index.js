@@ -104,13 +104,13 @@ class FormRoot extends React.Component {
                 <br></br>
                 <label htmlFor="hjemmesideVin"> Produsents hjemmeside: </label> 
                 <br></br>
-                <input name="hjemmesideVin" type="text" id={"'hjemmesideVin"+num} value={this.state["hjemmesideVin"+num]}
+                <input name="hjemmesideVin" type="text" id={"hjemmesideVin"+num} value={this.state["hjemmesideVin"+num]}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
                 <label htmlFor="omradeVin"> Område og land: <span className="req">  </span> </label> 
                 <br></br>
-                <input name="omradeVin" type="text" id={"'omradeVin"+num} value={this.state["omradeVin"+num]}
+                <input name="omradeVin" type="text" id={"omradeVin"+num} value={this.state["omradeVin"+num]}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
@@ -118,31 +118,31 @@ class FormRoot extends React.Component {
                     <span className="req">  </span> 
                 </label> 
                 <br></br>
-                <input name="drueVin" type="text" id={"'drueVin"+num} value={this.state["druerVin"+num]}
+                <input name="drueVin" type="text" id={"drueVin"+num} value={this.state["druerVin"+num]}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
                 <label htmlFor="navnVin"> Vinens navn: <span className="req">  </span> </label> 
                 <br></br>
-                <input name="navnVin" type="text" id={"'navnVin"+num} value={this.state["navnVin"+num]}
+                <input name="navnVin" type="text" id={"navnVin"+num} value={this.state["navnVin"+num]}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
                 <label htmlFor="argangVin"> Årgang: <span className="req">  </span> </label> 
                 <br></br>
-                <input name="argang" type="text" id={"'argangVin"+num} value={this.state["argangVin"+num]}
+                <input name="argang" type="text" id={"argangVin"+num} value={this.state["argangVin"+num]}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
                 <label htmlFor="prisVin"> Pris Vinmonopolet: </label> 
                 <br></br>
-                <input name="prisVin" type="text" id={"'prisVin"+num} value={this.state["prisVin"+num]}
+                <input name="prisVin" type="text" id={"prisVin"+num} value={this.state["prisVin"+num]}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
                 <label htmlFor="linkVin"> Link til Vinmonopolets side for vinen: </label> 
                 <br></br>
-                <input name="linkVin" type="text" id={"'linkVin"+num} value={this.state["produktsideVin"+num]}
+                <input name="linkVin" type="text" id={"linkVin"+num} value={this.state["produktsideVin"+num]}
                 onChange={e => this.setState({produktside: e.target.value})}>
                 </input>
                 <br></br>
@@ -202,6 +202,7 @@ class FormRoot extends React.Component {
                     druer += `${vin.ingredients.grapes[i].grapeDesc} ${vin.ingredients.grapes[i].grapePct}%, `
                 }
                 druer = druer.slice(0, druer.length-2); //End trailing chars
+                console.log("ID: "+refNum);
                 this.setState({
                     ["productIdVin"+refNum]: vin.basic.productId,
                     ["produsentVin"+refNum]: vin.logistics.manufacturerName,
@@ -212,6 +213,7 @@ class FormRoot extends React.Component {
                     ["prisVin"+refNum]: vin.prices[0].salesPrice,
                     ["produktsideVin"+refNum]: `www.vinmonopolet.no/p/${vin.basic.productId}`
                 });
+                console.log(this.state["prisVin"+refNum]);
             }
         });
     }
