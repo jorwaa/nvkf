@@ -3,6 +3,7 @@ const https = require("https");
 const path = require("path");
 const express = require("express");
 const req = require("express/lib/request");
+const { json } = require("express/lib/response");
 const app = express();
 
 const PORT = process.env.PORT || 3001;;
@@ -60,14 +61,17 @@ app.get("/api/vp", (req, response) => {
 
 app.post("/api/google", (req, res) => {
     console.log("POST request => '/api/google");
-    const importer = Array(req.body.data[0]);
-    const numProducts = req.body.data.length;
+    var body = req.body;
+    JSON.parse(body);
+    const importer = Array(body.data[0]);
+    const numProducts = body.data.length;
     for (let i = 1; i < numProducts; i++)
     {
-        let dataConcat = importer.concat(req.body.data[i]);
+        let dataConcat = importer.concat(body.data[i]);
         console.log("product ARR: " + dataConcat);
         let dataStr = (dataConcat.join()).replace(", ", ";")
         console.log("product STR: " + dataStr);
+        res.json({ProductString: dataStr});
     }
 });
 
