@@ -1,3 +1,4 @@
+import { application } from 'express';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -16,15 +17,9 @@ class FormRoot extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.addProduct = this.addProduct.bind(this);
         this.getData = this.getData.bind(this);
+        this.renderImporterInfo = this.renderImporterInfo.bind(this);
         this.renderProductList = this.renderProductList.bind(this);
         this.renderSingleProduct = this.renderSingleProduct.bind(this);
-    }
-
-    componentDidMount() {
-        this.setState({
-            importer: <ImporterInfo  name={this.inputChanged}/>,
-            //products: <ProductList name={this.inputChanged}/>,
-        })
     }
 
     render() {
@@ -38,13 +33,35 @@ class FormRoot extends React.Component {
                     <p>Ved bruk av denne nettleseren, fyll heller inn skjemaet du
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSccVTMiwCyowU5nPCGWjisLBgpgnaf43VoEg7ULE4FUMOXGJQ/viewform?vc=0&c=0&w=1"> finner her. </a>
                     </p>
-                    <p> Skriv inn info om {this.props.testProp}!</p>
+                    <p> Skriv inn info om {"vin"}!</p>
                     <p>{this.state.imp_name}</p>
                 </div>
-                {this.state.importer}
+                {this.renderImporterInfo()}
                 {this.renderProductList()}
             </form>
         </div>
+        );
+    }
+
+    renderImporterInfo() {
+        return (
+            <div id="importerInfo">
+                <label htmlFor="navn">Importør: *</label>
+                <br></br>
+                <input id="navn" name="navn" type="text" onChange={evt => this.setState({imp_name: evt.target.value})} required></input>
+                <br></br>
+                <label htmlFor="kontakt">Kontaktperson hos importør, navn: <span className="req"> * </span> </label>
+                <br></br>
+                <input name="kontakt" type="text" onChange={evt => this.setState({imp_kontakt: evt.target.value})} required id="kontakt"></input>
+                <br></br>
+                <label htmlFor="epost">E-post til kontaktperson: <span className="req"> * </span> </label>
+                <br></br>
+                <input name="epost" type="email" onChange={evt => this.setState({imp_mail: evt.target.value})} required id="epost"></input>
+                <br></br>
+                <label htmlFor="tlf">Telefonnummer til kontaktperson: <span className="req"> * </span> </label>
+                <br></br>
+                <input name="tlf" type="text" onChange={evt => this.setState({imp_tlf: evt.target.value})} required id="tlf"></input>
+            </div>
         );
     }
 
@@ -217,7 +234,20 @@ class FormRoot extends React.Component {
             }
         });
     }
-
+/*
+    sendProductData(data) {
+        console.log("Sender produktdata til server...");
+        fetch("/api/google", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            body: data
+        })
+        .then(res => alert(res));
+    }
+*/
 
     /**
      * Generic function that updates stat values.
@@ -234,16 +264,43 @@ class FormRoot extends React.Component {
 
     /**
      * Triggered when form is submitted.
-     * formats the relevant data and sends it 
-     * in a POST request to the API "/api/google".
+     * formats the product data
+     * After that, calls the function that starts the API request
      * 
-     * What happens then? idk...
+     * @param evt: the triggering event, needed to stop site from refreshing
+     *
      */
+    
     handleSubmit(evt) {
         alert("SUBMITTING FORM");
-        
-        evt.preventDefault();
+        return;
+       /* evt.preventDefault();
+        //
+        var sdu = [];
+        const importerInfo = [
+            this.state.imp_name,
+            this.state.imp_kontakt,
+            this.state.imp_mail,
+            this.state.imp_tlf
+        ];
+        sdu.push(importerInfo);
+        for (let i = 0; i < this.state.numProducts; i++)
+        {
+            let productData = [
+                this.state["varenummerVin"+i],
+                this.state["produsentVin"+i],
+                this.state["hjemmesideVin"+i],
+                this.state["omradeVin"+i],
+                this.state["drueVin"+i],
+                this.state["navnVin"+i],
+                this.state["argangVin"+i],
+                this.state["prisVin"+i],
+                this.state["linkVin"+i]
+            ];
+            sdu.push(productData);
+        } */
     }
+
 
 }
 
