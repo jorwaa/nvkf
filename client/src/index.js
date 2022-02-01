@@ -1,4 +1,4 @@
-import { application } from 'express';
+//import { application } from 'express';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -103,7 +103,7 @@ class FormRoot extends React.Component {
                     <span className="req"> * </span> 
                 </label>
                 <br></br>
-                <input name="varenummerVin" type="text" required id={"varenummerVin"+num} value={this.state["productNumberVin"+num]} 
+                <input name="varenummerVin" type="text" required id={"varenummerVin"+num} value={this.state["varenummerVin"+num] || ''} 
                 onChange={(e) => { this.setState({[e.target.id]: e.target.value}); console.log(e.target.id)}} ></input>
                 <br></br>
                 <div id="popupBtn">
@@ -115,19 +115,19 @@ class FormRoot extends React.Component {
                 <div className="vin" id="divVinInfo" style={{display: this.state["displayVin"+num]}}>
                 <label htmlFor="produsentVin"> Produsent: <span className="req">  </span> </label>
                 <br></br>
-                <input name="produsentVin" type="text" id={"produsentVin"+num} value={this.state["produsentVin"+num]}
+                <input name="produsentVin" type="text" id={"produsentVin"+num} value={this.state["produsentVin"+num] || ''}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
                 <label htmlFor="hjemmesideVin"> Produsents hjemmeside: </label> 
                 <br></br>
-                <input name="hjemmesideVin" type="text" id={"hjemmesideVin"+num} value={this.state["hjemmesideVin"+num]}
+                <input name="hjemmesideVin" type="text" id={"hjemmesideVin"+num} value={this.state["hjemmesideVin"+num] || ''}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
                 <label htmlFor="omradeVin"> Område og land: <span className="req">  </span> </label> 
                 <br></br>
-                <input name="omradeVin" type="text" id={"omradeVin"+num} value={this.state["omradeVin"+num]}
+                <input name="omradeVin" type="text" id={"omradeVin"+num} value={this.state["omradeVin"+num] || ''}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
@@ -135,32 +135,32 @@ class FormRoot extends React.Component {
                     <span className="req">  </span> 
                 </label> 
                 <br></br>
-                <input name="drueVin" type="text" id={"drueVin"+num} value={this.state["druerVin"+num]}
+                <input name="drueVin" type="text" id={"drueVin"+num} value={this.state["drueVin"+num] || ''}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
                 <label htmlFor="navnVin"> Vinens navn: <span className="req">  </span> </label> 
                 <br></br>
-                <input name="navnVin" type="text" id={"navnVin"+num} value={this.state["navnVin"+num]}
+                <input name="navnVin" type="text" id={"navnVin"+num} value={this.state["navnVin"+num] || ''}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
                 <label htmlFor="argangVin"> Årgang: <span className="req">  </span> </label> 
                 <br></br>
-                <input name="argang" type="text" id={"argangVin"+num} value={this.state["argangVin"+num]}
+                <input name="argang" type="text" id={"argangVin"+num} value={this.state["argangVin"+num] || ''}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
                 <label htmlFor="prisVin"> Pris Vinmonopolet: </label> 
                 <br></br>
-                <input name="prisVin" type="text" id={"prisVin"+num} value={this.state["prisVin"+num]}
+                <input name="prisVin" type="text" id={"prisVin"+num} value={this.state["prisVin"+num] || ''}
                 onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
                 <label htmlFor="linkVin"> Link til Vinmonopolets side for vinen: </label> 
                 <br></br>
-                <input name="linkVin" type="text" id={"linkVin"+num} value={this.state["produktsideVin"+num]}
-                onChange={e => this.setState({produktside: e.target.value})}>
+                <input name="linkVin" type="text" id={"linkVin"+num} value={this.state["linkVin"+num] || ''}
+                onChange={e => this.setState({[e.target.id]: e.target.value})}>
                 </input>
                 <br></br>
             </div>                <hr></hr>
@@ -234,20 +234,21 @@ class FormRoot extends React.Component {
             }
         });
     }
-/*
+
     sendProductData(data) {
         console.log("Sender produktdata til server...");
-        fetch("/api/google", {
+        const options = {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'content-type': 'application/json'
             },
-            body: data
-        })
+            body: JSON.stringify({"data": data})
+        }
+        fetch("/api/google", options)
         .then(res => alert(res));
     }
-*/
+
 
     /**
      * Generic function that updates stat values.
@@ -273,9 +274,7 @@ class FormRoot extends React.Component {
     
     handleSubmit(evt) {
         alert("SUBMITTING FORM");
-        return;
-       /* evt.preventDefault();
-        //
+        evt.preventDefault();
         var sdu = [];
         const importerInfo = [
             this.state.imp_name,
@@ -284,9 +283,9 @@ class FormRoot extends React.Component {
             this.state.imp_tlf
         ];
         sdu.push(importerInfo);
-        for (let i = 0; i < this.state.numProducts; i++)
+        for (let i = 1; i <= this.state.numProducts; i++)
         {
-            let productData = [
+            let productData = [ 
                 this.state["varenummerVin"+i],
                 this.state["produsentVin"+i],
                 this.state["hjemmesideVin"+i],
@@ -298,7 +297,9 @@ class FormRoot extends React.Component {
                 this.state["linkVin"+i]
             ];
             sdu.push(productData);
-        } */
+        }
+        console.log(sdu); 
+        this.sendProductData(sdu);
     }
 
 

@@ -60,7 +60,16 @@ app.get("/api/vp", (req, response) => {
 
 app.post("/api/google", (req, res) => {
     console.log("POST request => '/api/google");
-})
+    const importer = Array(req.body.data[0]);
+    const numProducts = req.body.data.length;
+    for (let i = 1; i < numProducts; i++)
+    {
+        let dataConcat = importer.concat(req.body.data[i]);
+        console.log("product ARR: " + dataConcat);
+        let dataStr = (dataConcat.join()).replace(", ", ";")
+        console.log("product STR: " + dataStr);
+    }
+});
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
