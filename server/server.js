@@ -62,6 +62,7 @@ app.get("/api/vp", (req, response) => {
 app.post("/api/google", (req, res) => {
     console.log("POST request => '/api/google");
     var body = req.body;
+    console.log(body);
     JSON.parse(body);
     const importer = Array(body.data[0]);
     const numProducts = body.data.length;

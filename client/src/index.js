@@ -243,7 +243,7 @@ class FormRoot extends React.Component {
                 'Accept': 'application/json',
                 'content-type': 'application/json'
             },
-            body: JSON.stringify({"data": data})
+            body: JSON.stringify(data)
         }
         fetch("/api/google", options)
         .then(res => alert(res));
