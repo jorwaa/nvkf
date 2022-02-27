@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;;
 
 if (process.env.GOOGLE_AUTH_JSON) {
-    const file = 'keys.json';
+    const file = '/workspace/keys.json';
     fs.writeFile(file, process.env.GOOGLE_AUTH_JSON, function(err) {
         if (err) {
             console.log(`Error writing to file ${file}.`)
