@@ -246,7 +246,10 @@ class FormRoot extends React.Component {
             body: JSON.stringify(data)
         }
         fetch("/api/google", options)
-        .then(res => alert(res));
+        .then((res) => res.json())
+        .then(data => {
+            console.log(data)
+        })
     }
 
 
@@ -273,7 +276,6 @@ class FormRoot extends React.Component {
      */
     
     handleSubmit(evt) {
-        alert("SUBMITTING FORM");
         evt.preventDefault();
         var sdu = [];
         const importerInfo = [
@@ -298,7 +300,9 @@ class FormRoot extends React.Component {
             ];
             sdu.push(productData);
         }
-        console.log(sdu); 
+
+        const sduJson = JSON.stringify(sdu); 
+        console.log(sduJson);
         this.sendProductData(sdu);
     }
 
