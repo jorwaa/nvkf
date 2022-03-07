@@ -24,22 +24,41 @@ div input[type=text] {
 
 .searchBtn {
     display: inline-block;
-    border:0.1em solid gray;
-    margin:0.4em 0.3em 0.3em 0;
-    border-radius:0.12em;
-    box-sizing: border-box;
-    text-decoration:none;
-    font-family:'Roboto',sans-serif;
-    font-weight:300;
-    background-color:#f7c380;
-    text-align:center;
-    transition: all 0.2s;
+    background-color: #f7c380;
+    border-radius: 2px;
+    border: none;
+    font-size: 14px;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    width: 120px;
+    transition: all 0.5s;
 }
 
-.searchBtn:hover {
-    background-color: #ab9982;
+.searchBtn span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
 }
 
+.searchBtn span:after {
+    content: ' \01F50E';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.searchBtn:hover span {
+    padding-right: 20px;
+}
+
+.searchBtn:hover span:after {
+    opacity: 1;
+    right: 0;
+}
 .manualBtn {
     display: inline-block;
     border:0.1em solid gray;
@@ -56,4 +75,82 @@ div input[type=text] {
 
 .manualBtn:hover {
     background-color: #ab9982;
+}
+
+.newProductBtn {
+    display: inline-block;
+    background-color: #70bfe4;
+    border-radius: 2px;
+    border: none;
+    color: #FFFFFF;
+    font-size: 14px;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    width: 150px;
+    transition: all 0.5s;
+}
+
+.newProductBtn span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.newProductBtn span:after {
+    content: '+';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -15px;
+    transition: 0.5s;
+}
+
+.newProductBtn:hover span {
+    padding-right: 15px;
+}
+
+.newProductBtn:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.submitBtn {
+    display: inline-block;
+    background-color: #9cdf65;
+    border-radius: 2px;
+    border: none;
+    color: #FFFFFF;
+    font-size: 14px;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    width: 150px;
+    transition: all 0.5s;
+}
+
+.submitBtn span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.submitBtn span:after {
+    content: '»';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.submitBtn:hover span {
+    padding-right: 15px;
+}
+
+.submitBtn:hover span:after {
+    opacity: 1;
+    right: 0;
 }

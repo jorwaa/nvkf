@@ -80,14 +80,14 @@ class FormRoot extends React.Component {
                         </div>;
                     })}
                     </div>
-                    <div className='newProductBtn'>
-                        <button onClick={this.addProduct}>
-                            Legg til et produkt
+                    <div>
+                        <button className='newProductBtn' onClick={this.addProduct}>
+                            <span> Legg til et produkt </span>
                         </button>
                     </div>
-                    <div className='submitBtn'>
-                        <button type="submit" name="send">
-                            Send inn
+                    <div>
+                        <button className='submitBtn' type="submit" name="send">
+                           <span> Send inn </span>
                         </button>
                     </div>
                 </div>
@@ -108,8 +108,8 @@ class FormRoot extends React.Component {
                 <div id="popupBtn">
                 <button className="searchBtn" type="button" 
                                 onClick={() => {this.getData(num)}} name="søk etter vin"> 
-                                 Søk etter vin 
-                            </button>,
+                                 <span>Søk etter vin</span> 
+                            </button>
                 </div>
                 <div className="vin" id="divVinInfo" style={{display: this.state["displayVin"+num]}}>
                 <label htmlFor="produsentVin"> Produsent: <span className="req">  </span> </label>
