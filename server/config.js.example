@@ -1,0 +1,23 @@
+module.exports = {
+    port: 3001,
+    mail: {
+        host: 'mail.example.com',
+        port: '465',
+        user: 'username',
+        pass: 'password',
+    },
+    vinmonopolet: {
+        key: '{generated @ api.vinmonopolet.no}',
+    },
+    google: {
+        sheetId: '{sheetId}',
+        range: '{pageName}!{startRow}:{endRow}',
+        auth: { 
+            // Google Service account authentication object:
+            type: 'service-account',
+            //etc...
+        }
+
+           
+    }
+}
