@@ -1,11 +1,12 @@
 const config = require('./config')
 const fs = require('fs');
 const {google} = require('googleapis');
+const { Stream } = require('stream');
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets']; // OR '.../auth/drive.${filename}'
 
 //User access & refresh tokens:
-const KEY_PATH = '/keys.json';
+const KEY_PATH = './keys.json';
 
 /**
  * writes a JSON object to the path 'KEY_PATH'
@@ -13,16 +14,19 @@ const KEY_PATH = '/keys.json';
  * 
  * throws an error if 'json' is undefined
  */
+
 function createKeyFile(json) {
-    if (json) {
-        fs.writeFile(KEY_PATH, json, function(err) {
-            if (err) {
-                console.log(`Error writing to file ${file}.`)
-            }
-        })
-    }else {
-        throw 'No key file was given. \nWill assume that a keyFile is already present.';
-    }
+
+    const data = JSON.stringify(json);
+
+    fs.writeFile(KEY_PATH, data, function(err) {
+        if (err) {
+            console.log(`Error writing to file ${KEY_PATH}.`)
+            throw err;
+        }else {
+            console.log(`Google credentials written to file ${KEY_PATH}`);
+        }
+    })
 }
 
 /**

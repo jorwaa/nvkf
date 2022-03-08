@@ -12,7 +12,8 @@
     "react-scripts": "^5.0.0",
     "server": "file:..",
     "vinskjema": "file:",
-    "web-vitals": "^2.1.2"
+    "web-vitals": "^2.1.2",
+    "which": "^2.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
