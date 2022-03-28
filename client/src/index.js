@@ -11,14 +11,20 @@ class FormRoot extends React.Component {
             imp_name: "",
             numProducts: 1,
             data: {},
-            products: [0]
+            products: [0],
+            submitTxt: 'Send inn'
         };
+
+        //Event handlers:
+        this.getData = this.getData.bind(this);
+        this.addProduct = this.addProduct.bind(this);
         this.inputChanged = this.inputChanged.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.addProduct = this.addProduct.bind(this);
-        this.getData = this.getData.bind(this);
-        this.renderImporterInfo = this.renderImporterInfo.bind(this);
+        this.sendProductData = this.sendProductData.bind(this);
+        this.getPostResponse = this.getPostResponse.bind(this);
         this.renderProductList = this.renderProductList.bind(this);
+        this.awaitPostResponse = this.awaitPostResponse.bind(this);
+        this.renderImporterInfo = this.renderImporterInfo.bind(this);
         this.renderSingleProduct = this.renderSingleProduct.bind(this);
     }
 
@@ -87,7 +93,7 @@ class FormRoot extends React.Component {
                     </div>
                     <div>
                         <button className='submitBtn' type="submit" name="send">
-                           <span> Send inn </span>
+                           <span> {this.state.submitTxt} </span>
                         </button>
                     </div>
                 </div>
@@ -244,13 +250,31 @@ class FormRoot extends React.Component {
             },
             body: JSON.stringify(data)
         }
+        this.awaitPostResponse()
         fetch("/api/google", options)
         .then((res) => res.json())
         .then(data => {
-            console.log(data)
+            this.getPostResponse(data);
+            //console.log(data)
         })
     }
 
+    awaitPostResponse() {
+        this.setState({
+            submitTxt: 'Sender skjema avgårde...',
+        })
+    }
+
+    getPostResponse(data) {
+        this.setState({
+            submitTxt: 'Ferdig!'
+         })
+         if (data.error) {
+             alert(`Noe gikk galt under registrering av produkter.
+             Vennligst prøv igjen senere eller ta kontakt via truls.aasterud@aasterud.net.`)
+         }
+        alert(`Suksess! \n${data.response.updates.updatedRows} viner registrert!`)
+    }
 
     /**
      * Generic function that updates stat values.

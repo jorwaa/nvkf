@@ -6,7 +6,6 @@ const express = require("express");
 const req = require("express/lib/request");
 const { json } = require("express/lib/response");
 const {google} = require('googleapis');
-//const sheets = google.sheets('v4');
 const sheets = require('./sheets');
 const { mailImages } = require("./vinmonopolet");
 const app = express();

@@ -60,7 +60,15 @@ async function appendSheet(data, auth) {
             values: data
         }
     });
-    return res.data;
+    console.log(res);
+    if (res.status == 200) {
+        return res.data;
+    }else {
+        return {
+            'status': res.status,
+            'error': 'true',
+        }
+    }
 }
 
 module.exports = {
