@@ -39,7 +39,7 @@ class FormRoot extends React.Component {
                     <p>Ved bruk av denne nettleseren, fyll heller inn skjemaet du
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSccVTMiwCyowU5nPCGWjisLBgpgnaf43VoEg7ULE4FUMOXGJQ/viewform?vc=0&c=0&w=1"> finner her. </a>
                     </p>
-                    <p> Skriv inn info om {"vin"}!</p>
+                    <hr style={{width: '75%'}}></hr>
                     <p>{this.state.imp_name}</p>
                 </div>
                 {this.renderImporterInfo()}
