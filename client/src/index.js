@@ -213,7 +213,7 @@ class FormRoot extends React.Component {
         fetch("/api/vp?product="+prodNum)
         .then((res) =>  res.json())
         .then(data => { 
-            console.log(data);
+            //console.log(data);
             if (data.error != "false" || data.data == "")
             alert(`Fant ikke produktinformasjon.\n${data.error}`);
             else {
@@ -260,6 +260,8 @@ class FormRoot extends React.Component {
     }
 
     awaitPostResponse() {
+        const btn = document.getElementsByClassName('submitBtn');
+        btn.innerHTML = '<span> Sender skjema avgårde... </span>'
         this.setState({
             submitTxt: 'Sender skjema avgårde...',
         })

@@ -71,8 +71,8 @@ async function mailImages(ids) {
 
 
     let message = {
-        from: 'Vinskjema <joran@wigen.dev>',
-        to: 'Jøran <joran.aasterud@gmail.com>',
+        from: `${config.mail.sender.name} <${config.mail.sender.address}>`,
+        to: `${config.mail.recipient.name} <${config.mail.recipient.address}>`,
         subject: `Registrert ${ids.length} nye viner`,
         text: 'Bilder er lagt ved som vedlegg.',
         html: html,
