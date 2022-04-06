@@ -18,8 +18,8 @@ const imageType = {
 
 function download_image(id) {
     const url = 'https://bilder.vinmonopolet.no/cache/'
-    const x = 150;
-    const y = 150;
+    const x = 1200;
+    const y = 1200;
     const scaling = scalingMethod.NO_SCALING;
     const type = imageType.STANDARD;
 
@@ -32,11 +32,11 @@ function download_image(id) {
         })
 }
 
-async function mailImages(ids) {
+async function mailImages(data) {
     const baseUrl = 'https://bilder.vinmonopolet.no/cache/'
 
-    const x = 150;
-    const y = 150;
+    const x = 1200;
+    const y = 1200;
     const scaling = scalingMethod.NO_SCALING;
     const dimensions = `${x}x${y}-${scaling}/`
 
@@ -56,13 +56,13 @@ async function mailImages(ids) {
     var attachments = [];
     var html = "";
 
-    for (let i = 0; i < ids.length; i++) {
-        let url = `${baseUrl}${dimensions}${ids[i]}-${type}.jpg`
-        html += `<p> ${ids[i]}: </p>
-                <img src="${url}" alt="${url}"/>
-                <br>`
+    for (let i = 0; i < data.length; i++) {
+        let url = `${baseUrl}${dimensions}${data[i][4]}-${type}.jpg`
+        html += `<h3> ${data[i][9]} - ${data[i][4]}: </h3>
+                <a href="${url}" alt="${data[i][4]}"> <b>Bilde</b> </a>
+                <hr>`
         let img = {
-            filename: `${ids[i]}.jpg`,
+            filename: `${data[i][4]}.jpg`,
             path: url
         }
         attachments.push(img);
@@ -73,7 +73,7 @@ async function mailImages(ids) {
     let message = {
         from: `${config.mail.sender.name} <${config.mail.sender.address}>`,
         to: `${config.mail.recipient.name} <${config.mail.recipient.address}>`,
-        subject: `Registrert ${ids.length} nye viner`,
+        subject: `Registrert ${data.length} nye viner`,
         text: 'Bilder er lagt ved som vedlegg.',
         html: html,
         attachments: attachments

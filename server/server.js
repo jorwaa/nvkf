@@ -52,6 +52,19 @@ app.get("/api/vp", (req, response) => {
         console.log(`statusCode: ${res.statusCode}`)
         console.log("Request sendt!");
         res.on("data", d => {
+            var data = [];
+            try {
+                JSON.parse(d.toString())[0];
+            }
+            catch (err) {
+                console.log(err.message);
+                response.json({
+                    productNumber: id,
+                    data: [],
+                    error: err
+                })
+                return;
+            }
             response.json({
                 productNumber: id,
                 data: JSON.parse(d.toString())[0],
@@ -92,9 +105,9 @@ app.post("/api/google", express.json(), (req, res) => {
     }
 
     sheets.appendSheet(data, auth)
-    .then((data) => {
-        mailImages(ids)
-        res.json({response: data})
+    .then((dataRes) => {
+        mailImages(data)
+        res.json({response: dataRes})
     });
 });
 
